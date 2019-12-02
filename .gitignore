@@ -63,3 +63,4 @@ typings/
 #config
 config
 config/dbConfig
+.DS_Store
