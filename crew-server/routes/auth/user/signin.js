@@ -22,4 +22,5 @@ router.post('/', (req, res) => {
         .send(util.successFalse(msg.INTERNAL_SERVER_ERROR));
     });
 });
+
 module.exports = router

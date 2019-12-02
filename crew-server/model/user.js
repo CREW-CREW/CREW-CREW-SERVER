@@ -5,6 +5,7 @@ const pool = require('../module/poolAsync');
 const encrypt = require('../module/encryption');
 const util = require('../module/util');
 const jwt = require('../module/jwt')
+var email_verified = 0
 
 module.exports = {
     signin: ({
@@ -47,18 +48,19 @@ module.exports = {
             });
     },
     signup: ({
-        id,
-        password,
-        salt,
-        userName,
-        nickname,
-        area,
-        interest
+        id:id,
+        password:password,
+        salt:salt,
+        key_for_verify:key_for_verify,
+        userName:userName,
+        nickname:nickname,
+        area:area,
+        interest:interest
     }) => {
         const table = 'user';
-        const fields = 'id, password, salt, userName, nickname, area, interest';
-        const questions = `?, ?, ?, ?, ?, ?, ?`;
-        const values = [id, password, salt, userName, nickname, area, interest];
+        const fields = 'id, password, salt, userName, key_for_verify, nickname, area, interest, email_verified';
+        const questions = `?, ?, ?, ?, ?, ?, ?, ?, ?`;
+        const values = [id, password, salt, key_for_verify, userName, nickname, area, interest, email_verified];
         return pool.queryParam_Parse(`INSERT INTO ${table}(${fields}) VALUES(${questions})`, values)
             .catch(err => {
                 // ER_DUP_ENTRY
@@ -73,5 +75,12 @@ module.exports = {
                 throw err;
             });
     },
+
+
+    // 스키마 정의
+
+    // email_verified :{ type: Boolean, required: true, default: false },
+
+    // key_for_verify :{ type: String, required:true },
 
 };
