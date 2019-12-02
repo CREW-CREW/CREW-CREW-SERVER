@@ -5,6 +5,7 @@ const pool = require('../module/poolAsync');
 const encrypt = require('../module/encryption');
 const util = require('../module/util');
 const jwt = require('../module/jwt')
+var email_verified = 0
 
 module.exports = {
     signin: ({
@@ -12,10 +13,10 @@ module.exports = {
         password
     }) => {
         const table = 'user';
-        const query = `SELECT * FROM ${table} WHERE id = '${id}'`;
+        const query = `SELECT * FROM ${table} WHERE id = '${id}' AND email_verified = 1`;
         return pool.queryParam_None(query)
             .then(async (userResult) => {
-                console.log(userResult);
+
                 if (userResult.length == 0) {
                     return {
                         code: code.BAD_REQUEST,
@@ -47,18 +48,20 @@ module.exports = {
             });
     },
     signup: ({
-        id,
-        password,
-        salt,
-        userName,
-        nickname,
-        area,
-        interest
+        id:id,
+        password:password,
+        salt:salt,
+        key_for_verify:key_for_verify,
+        userName:userName,
+        nickname:nickname,
+        email:email,
+        area:area,
+        interest:interest
     }) => {
         const table = 'user';
-        const fields = 'id, password, salt, userName, nickname, area, interest';
-        const questions = `?, ?, ?, ?, ?, ?, ?`;
-        const values = [id, password, salt, userName, nickname, area, interest];
+        const fields = 'id, password, salt, key_for_verify, userName, nickname, email, area, interest, email_verified';
+        const questions = `?, ?, ?, ?, ?, ?, ?, ?, ?, ?`;
+        const values = [id, password, salt, key_for_verify, userName, nickname, email, area, interest, email_verified];
         return pool.queryParam_Parse(`INSERT INTO ${table}(${fields}) VALUES(${questions})`, values)
             .catch(err => {
                 // ER_DUP_ENTRY
@@ -73,5 +76,38 @@ module.exports = {
                 throw err;
             });
     },
+
+    update: ({
+        key
+    }) => {
+        const table = 'user';
+        const query = `UPDATE ${table} SET email_verified = 1 WHERE key_for_verify = '${key}'`;
+        return pool.queryParam_None(query);
+    },
+
+    getEmail: ({ insertId
+    }) => {
+        const table = 'user'
+        const query = `SELECT email FROM ${table} WHERE userIdx = '${insertId}'`;
+        return pool.queryParam_None(query)
+        .then(result => {
+            // if(!data){
+            //     return {
+            //         code: statusCode.BAD_REQUEST,
+            //         json: authUtil.successFalse(responseMessage.NO_USER)
+            //     };
+            // }
+            //console.log(result[0].email)
+            const email = result[0].email
+            return {
+                code: code.OK,
+                json: util.successTrue(msg.USER_UPDATE_SUCCESS, email)
+            };
+        })
+        .catch(err => {
+            console.log(err);
+            throw err;
+        });
+    }
 
 };
