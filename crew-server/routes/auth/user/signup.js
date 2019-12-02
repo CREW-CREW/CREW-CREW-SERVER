@@ -10,13 +10,13 @@ const encrypt = require('../../../module/encryption');
 const nodemailer = require('nodemailer');
 const smtpTransporter=require('nodemailer-smtp-transport');
 const crypto = require('crypto');
-
+const mailInfo = require('../../../config/mail.json')
 var smtpTransport = nodemailer.createTransport(smtpTransporter({
     service: 'Gmail',
     host:'smtp.gmail.com',
     auth: {
-        user: 'syleedata@gmail.com',
-        pass: 'rkdgur8504'
+        user: mailInfo.user,
+        pass: mailInfo.pass
     }
 }))
 
@@ -50,7 +50,7 @@ router.post('/', (req, res) => {
                     //url
                     var url = 'http://' + req.get('host')+'/auth/user/signup/confirmEmail'+'?key='+key_for_verify;               
                     //const email = 'siyeon1313@gmail.com';
-                    console.log('이거는 getEmail',' ',result);
+                    console.log('이거는 getEmail',' ', result);
                     //옵션
                     var mailOpt = {
                         from: 'syleedata@gmail.com',
