@@ -13,10 +13,10 @@ module.exports = {
         password
     }) => {
         const table = 'user';
-        const query = `SELECT * FROM ${table} WHERE id = '${id}'`;
+        const query = `SELECT * FROM ${table} WHERE id = '${id}' AND email_verified = 1`;
         return pool.queryParam_None(query)
             .then(async (userResult) => {
-                console.log(userResult);
+
                 if (userResult.length == 0) {
                     return {
                         code: code.BAD_REQUEST,
@@ -54,13 +54,14 @@ module.exports = {
         key_for_verify:key_for_verify,
         userName:userName,
         nickname:nickname,
+        email:email,
         area:area,
         interest:interest
     }) => {
         const table = 'user';
-        const fields = 'id, password, salt, userName, key_for_verify, nickname, area, interest, email_verified';
-        const questions = `?, ?, ?, ?, ?, ?, ?, ?, ?`;
-        const values = [id, password, salt, key_for_verify, userName, nickname, area, interest, email_verified];
+        const fields = 'id, password, salt, key_for_verify, userName, nickname, email, area, interest, email_verified';
+        const questions = `?, ?, ?, ?, ?, ?, ?, ?, ?, ?`;
+        const values = [id, password, salt, key_for_verify, userName, nickname, email, area, interest, email_verified];
         return pool.queryParam_Parse(`INSERT INTO ${table}(${fields}) VALUES(${questions})`, values)
             .catch(err => {
                 // ER_DUP_ENTRY
@@ -76,11 +77,37 @@ module.exports = {
             });
     },
 
+    update: ({
+        key
+    }) => {
+        const table = 'user';
+        const query = `UPDATE ${table} SET email_verified = 1 WHERE key_for_verify = '${key}'`;
+        return pool.queryParam_None(query);
+    },
 
-    // 스키마 정의
-
-    // email_verified :{ type: Boolean, required: true, default: false },
-
-    // key_for_verify :{ type: String, required:true },
+    getEmail: ({ insertId
+    }) => {
+        const table = 'user'
+        const query = `SELECT email FROM ${table} WHERE userIdx = '${insertId}'`;
+        return pool.queryParam_None(query)
+        .then(result => {
+            // if(!data){
+            //     return {
+            //         code: statusCode.BAD_REQUEST,
+            //         json: authUtil.successFalse(responseMessage.NO_USER)
+            //     };
+            // }
+            //console.log(result[0].email)
+            const email = result[0].email
+            return {
+                code: code.OK,
+                json: util.successTrue(msg.USER_UPDATE_SUCCESS, email)
+            };
+        })
+        .catch(err => {
+            console.log(err);
+            throw err;
+        });
+    }
 
 };
