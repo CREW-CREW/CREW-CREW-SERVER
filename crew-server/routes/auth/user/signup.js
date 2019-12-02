@@ -22,11 +22,12 @@ var smtpTransport = nodemailer.createTransport(smtpTransporter({
 
 router.post('/', (req, res) => {
     console.log(1);
-    //인증번호 생성하는 부분
+    const {id, password, userName, nickname, email, area, interest} = req.body;
+            //인증번호 생성하는 부분
     var key_one = crypto.randomBytes(256).toString('hex').substr(100, 5);
     var key_two = crypto.randomBytes(256).toString('base64').substr(50, 5);
     var key_for_verify = key_one + key_two;
-    const {id, password, userName, nickname, email, area, interest} = req.body;
+
     if(!id || !password || !userName || !nickname || !email || !area || !interest) {
         res.status(code.BAD_REQUEST).send(util.successFalse(msg.NULL_VALUE));
         return;
@@ -36,18 +37,20 @@ router.post('/', (req, res) => {
     .then((result) => {
         if(result.code && result.json) return result;
         const {hashed, salt} = result;
-        console.log(email)
+     //   console.log(email)
 
         //인증번호 회원가입 시 추가하기
         return User.signup({id, password: hashed, salt, key_for_verify, userName, nickname, email, area, interest});
-    }).then(result => {
-        console.log(result)
-        const userIdx = result.insertId;
-        //메일 보내기 
+    }).then(result=> {
+        console.log('여기는 signup',' ',result)
+        const insertId = result.insertId
+        console.log(insertId)
+        User.getEmail({insertId}).then(result => {
+                    
                     //url
-                    var url = 'http://' + req.get('host')+'/confirmEmail'+'?key='+key_for_verify;               
-                    const email = 'siyeon1313@gmail.com';
-                    console.log(email);
+                    var url = 'http://' + req.get('host')+'/auth/user/signup/confirmEmail'+'?key='+key_for_verify;               
+                    //const email = 'siyeon1313@gmail.com';
+                    console.log('이거는 getEmail',' ',result);
                     //옵션
                     var mailOpt = {
                         from: 'syleedata@gmail.com',
@@ -65,7 +68,13 @@ router.post('/', (req, res) => {
                         smtpTransport.close();
                     });
                     res.send('<script type="text/javascript">alert("이메일을 확인하세요."); window.location="/"; </script>');
-
+        }).catch(err => {
+            console.log(err);
+            return {
+                code: code.INTERNAL_SERVER_ERROR,
+                json: util.successFalse(msg.INTERNAL_SERVER_ERROR)
+            };
+        })
         // return {
         //     code: code.OK,
         //     json: util.successTrue('success', userIdx)
@@ -83,21 +92,27 @@ router.post('/', (req, res) => {
 
 });
 
-router.get('/confirmEmail', function (req,res) {
-
-    User.updateOne({key_for_verify:req.query.key},{$set:{email_verified:true}}, function(err,user){
-        //에러처리
-        if (err) {
-            console.log(err);
-        }
+router.get('/confirmEmail', (req,res) => {
+    const key = req.query.key
+    console.log(key)
+    // user.updateOne({key_for_verify:req.query.key},{$set:{email_verified:true}}, function(err,user){
+    // User.update({key}, (err, user) => {
+    User.update({key})
+    .then(result => {
+        console.log(result)
         //일치하는 key가 없으면
-        else if(user.n==0){
+        if(result.n==0){
             res.send('<script type="text/javascript">alert("Not verified"); window.location="/"; </script>');
         }
         //인증 성공
         else {
             res.send('<script type="text/javascript">alert("Successfully verified"); window.location="/"; </script>');
         }
+    }).catch(err => {
+        console.log(err);
+        throw err;
+    }).then(({code, json})=>{
+        res.status(code).send(json)
     });
 });
 
