@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<head>
+    <title>여성운동 커뮤니티, 크루크루</title>
+    <link rel="stylesheet" type="text/css" href="/css/searchbox.css" />
+    <link rel="stylesheet" type="text/css" href="/css/card.css" />
+    <link rel="stylesheet" type="text/css" href="/css/fullpage.css" />
+    <script src="/javascripts/fullpage.js"></script>
+    <script src="/static/js/searchbox.js"></script>
+    <!-- Compiled and minified CSS -->
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans|Raleway:800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="fullpage">
+        <div class="section" id="section1">
+            <p id="section1_title">RECRUIT <br> CREW <br> CREW </p>
+            <p id="section1_content">운동이 필요한 순간, 크루크루<br> 당신의 운동 크루를 찾아보세요!</p>
+        </div>
+
+        <div class="section" id="section2">
+
+            <div id="section2_article">
+                <p id="article">함께 운동할 친구가 필요하세요?<br>크루크루에서 찾아보세요!</p>
+            </div>
+            
+            <div class="wrapper">
+                <div class="container">
+                    <input type="text" class="input" placeholder="What are you looking for?">
+                    <input type="button" value="search" class="close-btn">
+                </div>
+            </div>
+
+            <div class="section2_icon">
+                <div class="icon1"><img src="/images/bicycle_icon.png" width="130" height="130"></div>
+                <div class="icon2"><img src="/images/badminton_icon.png" width="130" height="130"></div>
+                <div class="icon3"><img src="/images/swimming_icon.png" width="130" height="130"></div>
+                <div class="icon4"><img src="/images/running_icon.png" width="130" height="130"></div>
+                <div class="icon5"><img src="/images/fitness_icon.png" width="130" height="130"></div>
+            </div>
+
+        </div>
+
+        <div class="section" id="section3">
+            <div id="section3_content">
+                <strong>실시간 </strong>크루 위치 확인<br>
+                <strong>채팅 </strong>시스템<br>
+                <strong>번개운동 </strong>모임
+            </div>
+            <div id="section3_subcontent">
+                크루크루 앱으로 함께 하세요!
+            </div>
+            <img src="/images/iphone_img.png" class="iphone_img" />
+        </div>
+
+        <div class="section" id="section4">
+            <section class="info" style="font-size:0.5rem;">
+                <h1>현재 모집중인 크루</h1>
+            </section>
+            <section class="cards-wrapper">
+                <div class="card-grid-space">
+                    <a class="card" href="https://codetheweb.blog/2017/10/06/html-syntax/" style="--bg-img: url('/images/running2.png')">
+                        <div>
+                            <h1>청파러너스</h1>
+                            <p>효창공원 ~ 이촌 한강공원</p>
+                            <div class="date">매주 토요일 3시 ~ 6시</div>
+                            <div class="tags">
+                                <div class="tag">high</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="card-grid-space">
+                    <a class="card" href="https://codetheweb.blog/2017/10/09/basic-types-of-html-tags/" style="--bg-img: url('/images/fitness2.png')">
+                    <div>
+                        <h1>헬스메이트</h1>
+                        <p>숙명여대 건강체조실</p>
+                        <div class="date">매일 저녁 7시 ~ 9시</div>
+                        <div class="tags">
+                        <div class="tag">Low</div>
+                        </div>
+
+                    </div>
+                    </a>
+                </div>
+                <div class="card-grid-space">
+                    <a class="card" href="https://codetheweb.blog/2017/10/14/links-images-about-file-paths/" style="--bg-img: url('/images/yoga.png')">
+                    <div>
+                        <h1>Daily Yoga</h1>
+                        <p>숙명여대 건강체조실</p>
+                        <div class="date">화, 목, 토 오전 11시 ~ 12시</div>
+                        <div class="tags">
+                        <div class="tag">Middle</div>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+        </section>
+        </div>
+
+    </div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script type="text/javascript">
+	var myFullpage = new fullpage('#fullpage', {
+		sectionsColor: ['#f2f2f2', '#4BBFC3', 'rgba(0,0,0,0.7)', 'whitesmoke', '#ccddff']
+	});
+</script>
+
+</html>
