@@ -6,6 +6,11 @@ const code = require('../../../module/statusCode');
 const msg = require('../../../module/responseMessage');
 const User = require('../../../model/user');
 
+router.get('/', (req, res) => {
+    res.render('user/signin')
+})
+
+
 router.post('/', (req, res) => {
     const {id, password} = req.body;
     // 파라미터 값 체크
@@ -15,8 +20,10 @@ router.post('/', (req, res) => {
         return;
     }
     User.signin({id, password})
-    .then(({code, json}) => {
-        res.status(code).send(json);
+    .then((User) => {
+        console.log(User)
+        const {id, password} = User[0];
+        //res.status(code).send(json);
     }).catch(err => {
         res.status(code.INTERNAL_SERVER_ERROR)
         .send(util.successFalse(msg.INTERNAL_SERVER_ERROR));
