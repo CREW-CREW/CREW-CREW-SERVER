@@ -47,6 +47,7 @@ module.exports = {
                 throw err;
             });
     },
+
     signup: ({
         id:id,
         password:password,
@@ -75,6 +76,12 @@ module.exports = {
                 console.log(err);
                 throw err;
             });
+    },
+
+    mypage:({id}) =>{
+        const table = 'user';
+        const query = `SELECT id, nickname, interest FROM ${table} WHERE id = '${id}'`;
+        return pool.queryParam_None(query);
     },
 
     update: ({
