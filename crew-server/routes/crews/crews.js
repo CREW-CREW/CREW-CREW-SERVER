@@ -77,6 +77,10 @@ router.get('/:crewIdx', (req, res) => {
     // });
 });
 
+router.get('/', (req, res) => {
+    res.render('crews/crewCreate')
+})
+
 // 크루 새로 생성하기 
 router.post('/', (req, res) =>  {
     parameterChecker(req.body, ['crewName', 'category', 'level', 'time', 'content', 'image'])
@@ -89,7 +93,7 @@ router.post('/', (req, res) =>  {
     }).then(result => {
         if(result.code && result.json) return result;
         const json = result;
-        return crew.create(json)
+        return Crew.create(json)
     }).then(result => {
         if(result.code && result.json) return result;
         const insertId = result.insertId;
@@ -103,8 +107,9 @@ router.post('/', (req, res) =>  {
             code: code.INTERNAL_SERVER_ERROR,
             json: util.successFalse(msg.INTERNAL_SERVER_ERROR)
         };
-    }).then(({code, json})=>{
-        res.status(code).send(json);
+    }).then(()=>{
+        //res.status(code).send(json);
+        res.send('<script type="text/javascript">alert("크루를 생성하였습니다!"); window.location="/"; </script>');
     });
 });
 

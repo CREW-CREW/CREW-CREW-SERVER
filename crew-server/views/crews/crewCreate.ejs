@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Course</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/crew-create.css">
+</head>
+
+
+
+<body>
+    <div class="form-container">
+        <form action="" method="post">
+            <h1>크루 만들기!</h1>
+
+            <div class="form-group">
+                <input type="text" required="required" id="crewName" name="crewName"/>
+                <label for="input" class="control-label">크루 이름</label><i class="bar"></i>
+            </div>
+
+            <div class="form-group">
+                <select name="category" name="category">
+                    <option>Cycling</option>
+                    <option>Badminton</option>
+                    <option>Swimming</option>
+                    <option>Running</option>
+                    <option>Fitness</option>
+                </select>
+                <label for="select" class="control-label">카테고리</label><i class="bar"></i>
+            </div>
+
+            <div class="form-radio">
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="level" value="high" checked="checked" /><i class="helper"></i>High
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="level" value="mid" /><i class="helper"></i>Mid
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="level" value="low" /><i class="helper"></i>Low
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <textarea required="required" id="content" name="content"></textarea>
+                <label for="textarea" class="control-label">상세 소개를 입력하세요</label><i class="bar"></i>
+            </div>
+
+            <div class="form-group">
+                <input type="text" required="required" id="time" name="time" />
+                <label for="input" class="control-label">모임 시간</label><i class="bar"></i>
+            </div>
+
+            <div class="form-group">
+                    <input type="text" required="required" id="image" name="image" />
+                    <label for="input" class="control-label">크루 사진</label><i class="bar"></i>
+            </div>
+
+            <!-- <div class="form-group">
+                <input type="file" required="required" id="image" />
+                    <label for="input" class="control-label">크루 소개 사진</label><i class="bar"></i>
+            </div> -->
+            <div class="button-container">
+                    <button type="submit" class="button"><span>Submit</span></button>
+            </div>
+        </form>
+
+
+    </div>
+
+<script>
+        console.log(document.all.crewName.value);
+        console.log(document.all.level.value);
+        console.log(document.all.time.value);
+        console.log(document.all.category.value);
+        console.log(document.all.content.value);
+        console.log(document.all.image.value);
+
+</script>  
+</body>
+
+</html>
