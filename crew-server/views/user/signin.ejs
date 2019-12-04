@@ -37,28 +37,24 @@
 			<div class="wrap-login100 p-t-85 p-b-20">
                 <form method="post" action="">
 				<form class="login100-form validate-form">
-                <!--   {% csrf_token %} -->
 					<span class="login100-form-title p-b-70">
 						HELLO MY CREW!
 					</span>
 					<span class="login100-form-avatar">
 						<img src="/images/logo.png">
 					</span>
-                <!--  {% for field in form %}
-                    {% if field == form.username %} -->
-					<div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Enter username">
-						<input class="input100" type="text" name="username">   
-						<span class="focus-input100" data-placeholder="Username"></span>
-					</div>
-                <!-- {% endif %} -->
 
-                <!--  {% if field == form.password %}-->
-					<div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
-						<input class="input100" type="password" name="password">
-						<span class="focus-input100" data-placeholder="Password"></span>
+					<div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Enter username">
+						<label>Username</label>
+						<input class="input100" type="text" id="id" name="id">   
+						<span class="focus-input100"></span>
 					</div>
-                <!--  {% endif %}
-                    {% endfor %} -->
+
+					<div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
+						<label>Password</label>
+						<input class="input100" type="password" id="password" name="password">
+						<span class="focus-input100" ></span>
+					</div>
 
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn">
@@ -80,19 +76,6 @@
 					</ul>
                     </form>
 				</form>
-
-			<!--	{% if message %}
-
-<script>
-
-					$('button').on('click', function(){
-						swal(
-							'{{message}}'
-						)
-					});
-					
-        		</script>
-        		{% endif %}  -->
 			</div>
 		</div>
 	</div>
@@ -115,7 +98,7 @@
 <!--===============================================================================================-->
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
-	<script src="js/main.js"></script>
+	<script src="/javascripts/main.js"></script>
 	<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/0.4.2/sweet-alert.min.js"></script>
 </body>
 </html>
