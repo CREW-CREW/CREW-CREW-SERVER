@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sign Up Form</title>
+        <link rel="stylesheet" href="/css/normalize.css">
+        <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/css/signup.css?ver=2">
+    </head>
+
+    <body>
+
+        <form action="" method="post" onsubmit="return checkIt()">
+
+            <h1>Sign Up</h1>
+
+            <fieldset>
+                <legend><span class="number">1</span>Your basic info</legend>
+                <label for="id">ID:</label>
+                <input type="text" id="id" name="id" placeholder="사용하실 ID" value="id">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="사용하실 PW" value="password">
+                <label for="userName">Name:</label>
+                <input type="text" id="userName" name="userName" placeholder="실명" value="userName">
+                <label for="nickname">Nickname:</label>
+                <input type="text" id="nickname" name="nickname" placeholder="사용하실 별명" value="nickname">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="사용하실 e-mail" value="email">
+            </fieldset>
+
+            <fieldset>
+                <label for="area">Area:</label>
+                <select id="area" name="area" value="area">
+                    <!-- <optgroup label="Web"> -->
+                        <option value="Seoul">Seoul</option>
+                        <option value="Kyunggi">Kyunggi</option>
+                        <option value="Gangwon">Gangwon</option>
+                        <option value="Incheon">Incheon</option>
+                        <option value="Daejeon">Daejeon</option>
+                        <option value="Busan">Busan</option>
+                        <option value="Jeju">Jeju</option>
+                    <!-- </optgroup> -->
+                </select>
+
+                <label>Interest:</label>
+                <input type="checkbox" id="cycling" value="cycling" name="interest"><label for="cycling" class="light">Cycling</label><br> 
+                <input type="checkbox" id="badminton" value="badminton" name="interest"><label for="badminton" class="light">Badminton</label><br>
+                <input type="checkbox" id="swimming" value="swimming" name="interest"><label for="swimming" class="light">Swimming</label><br>
+                <input type="checkbox" id="running" value="running" name="interest"><label for="running" class="light">Running</label><br>
+                <input type="checkbox" id="fitness" value="fitness" name="interest"><label for="fitness" class="light">Fitness</label><br>
+            </fieldset>
+            <button type="submit">Sign Up</button>
+        </form>
+
+    </body>
+
+    <script>
+        console.log(document.all.id.value);
+        console.log(document.all.password.value);
+        console.log(document.all.userName.value);
+        console.log(document.all.nickname.value);
+        console.log(document.all.email.value);
+        console.log(document.all.area.value);
+        console.log(document.all.interest.value);
+        document.getElementById('id').value='';
+        document.getElementById('password').value='';
+        document.getElementById('userName').value='';
+        document.getElementById('nickname').value='';
+        document.getElementById('email').value='';
+        function checkIt(){
+            if (!document.myForm.pass.value){	                    // 자바스크립트 : 빈문자열 -> false 반환
+                alert("비밀번호를 입력하지 않았습니다.");
+                document.myForm.focus();
+                return false;
+            }
+        }
+    </script>
+</html>

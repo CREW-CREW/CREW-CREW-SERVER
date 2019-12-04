@@ -20,6 +20,10 @@ var smtpTransport = nodemailer.createTransport(smtpTransporter({
     }
 }))
 
+router.get('/', (req, res) => {
+    res.render('user/signup')
+})
+
 router.post('/', (req, res) => {
     console.log(1);
     const {id, password, userName, nickname, email, area, interest} = req.body;
