@@ -21,10 +21,9 @@ router.post('/', (req, res) => {
     }
     User.signin({id, password})
     .then((User) => {
-        console.log(User)
-        const {id, password} = User[0];
-        //res.status(code).send(json);
+        res.send('<script type="text/javascript">alert("Successfully verified"); window.location="/"; </script>');
     }).catch(err => {
+        //console.log(err)
         res.status(code.INTERNAL_SERVER_ERROR)
         .send(util.successFalse(msg.INTERNAL_SERVER_ERROR));
     });
