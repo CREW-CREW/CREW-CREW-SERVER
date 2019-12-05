@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+    <head>
+        <title>여성운동 커뮤니티, 크루크루</title>
+        <link rel="stylesheet" type="text/css" href="/css/fullpage.css?ver=1" />
+        <link rel="stylesheet" type="text/css" href="/css/crew-detail.css" />
+        <script src="/javascripts/fullpage.js"></script>
+        <!-- Compiled and minified CSS -->
+        <link href="https://fonts.googleapis.com/css?family=Poppins:900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Noto+Sans|Raleway:800&display=swap" rel="stylesheet">
+    </head>
+    <style>
+            body {
+                background-image : url('/images/<%=category%>back.jpg');
+            }
+    </style>
+    
+    <body>
+            <div class="section" id="section4">
+                <section class="info" style="text-align: center;">
+                    <h1><%=category%></h1>
+                </section>
+                <section class="cards-wrapper">
+                    <% for(var i=0; i<length ; i++){ %> 
+                        <div class="card-grid-space">
+                            <a class="card" href="/crews/<%=list[i].crewIdx%>" style="--bg-img: url('/images/running2.png')">
+                                <div>
+                                    <h1><%=list[i].crewName%></h1>
+                                    <div class="date"><%=list[i].time%></div>
+                                    <div class="tags">
+                                        <div class="tag"><%=list[i].level%></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    <% } %>
+            </section>
+            </div>
+    </body>
+    
+</html>
