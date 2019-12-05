@@ -8,49 +8,23 @@ const authUtil = require('../../module/authUtil')
 const msg = require('../../module/responseMessage')
 
 // 스포츠 카테고리 별로 크루 리스트 보여주기
-router.post('/list', (req, res) => {
-
-    crew.readAll(req.body)
-    .then(result => {
-        console.log(result);
-        if(result.code && result.json) return result;
-        return {
-            code: code.OK,
-            json: util.successTrue('',result)
-        };
+router.get('/category/:category', (req, res) => {
+    const category = req.params.category;
+    Crew.readAll({category})
+    .then((Crew) => {
+        //console.log(Crew);
+        const length = Object.keys(Crew).length;
+        if(Crew.code && Crew.json) return Crew;
+        const {crewIdx, crewName, category, level, time, content, image} = Crew[0];
+        const list = Crew
+        res.render('crews/crewList', {crewIdx, list, crewName, category, level, time, content, image, length}); 
     }).catch(err => {
         console.log(err);
         return {
             code: code.INTERNAL_SERVER_ERROR,
             json: util.successFalse(msg.INTERNAL_SERVER_ERROR)
         };
-    }).then(()=>{
-        res.status(code).send(json)
-    });
-});
-
-// 크루에 가입하기
-router.get('/:crewIdx/recruit', authUtil.isLoggedin , (req, res) => {
-    const crewIdx = req.params.crewIdx;
-    const userIdx = req.decoded.userIdx;
-
-    crew.recruit({crewIdx, userIdx})
-    .then(result => {
-        console.log(result);
-        if(result.code && result.json) return result;
-        return {
-            code: code.OK,
-            json: util.successTrue('success')
-        };
-    }).catch(err => {
-        console.log(err);
-        return {
-            code: code.INTERNAL_SERVER_ERROR,
-            json: util.successFalse(msg.INTERNAL_SERVER_ERROR)
-        };
-    }).then(({code, json})=>{
-        res.status(code).send(json)
-    });
+    })
 });
 
 // 크루 상세 정보 페이지 
@@ -71,10 +45,30 @@ router.get('/:crewIdx', (req, res) => {
         res.status(code.BAD_REQUEST)
         .send(util.successFalse(msg.OUT_OF_VALUE));
     })
-    // }).then(({code, json})=>{
-    //   //  res.status(code).send(json)
-    //     res.render('crews/crewDetail', {crewName:crewName, category:category, level:level, time:time, content:content, image:image}); 
-    // });
+});
+
+// 크루에 가입하기
+router.get('/:crewIdx/recruit', authUtil.isLoggedin , (req, res) => {
+    const crewIdx = req.params.crewIdx;
+    const userIdx = req.decoded.userIdx;
+
+    Crew.recruit({crewIdx, userIdx})
+    .then(result => {
+        console.log(result);
+        if(result.code && result.json) return result;
+        return {
+            code: code.OK,
+            json: util.successTrue('success')
+        };
+    }).catch(err => {
+        console.log(err);
+        return {
+            code: code.INTERNAL_SERVER_ERROR,
+            json: util.successFalse(msg.INTERNAL_SERVER_ERROR)
+        };
+    }).then(({code, json})=>{
+        res.status(code).send(json)
+    });
 });
 
 router.get('/', (req, res) => {
