@@ -22,7 +22,7 @@
                 <section class="cards-wrapper">
                     <% for(var i=0; i<length ; i++){ %> 
                         <div class="card-grid-space">
-                            <a class="card" href="/crews/<%=list[i].crewIdx%>" style="--bg-img: url('/images/running2.png')">
+                            <a class="card" href="/crews/<%=list[i].crewIdx%>" style="--bg-img: url('<%=list[i].image%>')">
                                 <div>
                                     <h1><%=list[i].crewName%></h1>
                                     <div class="date"><%=list[i].time%></div>

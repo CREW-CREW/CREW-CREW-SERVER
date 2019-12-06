@@ -6,6 +6,7 @@ const code = require('../../module/statusCode')
 const util = require('../../module/util')
 const authUtil = require('../../module/authUtil')
 const msg = require('../../module/responseMessage')
+const upload = require('../../config/multer');
 
 // 스포츠 카테고리 별로 크루 리스트 보여주기
 router.get('/category/:category', (req, res) => {
@@ -76,7 +77,9 @@ router.get('/', (req, res) => {
 })
 
 // 크루 새로 생성하기 
-router.post('/', (req, res) =>  {
+router.post('/', upload.single('image'), (req, res) =>  {
+    console.log(req.file)
+    req.body.image = req.file.location
     parameterChecker(req.body, ['crewName', 'category', 'level', 'time', 'content', 'image'])
     .catch(err => {
         console.log(err);
