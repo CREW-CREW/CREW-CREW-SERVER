@@ -24,7 +24,6 @@ module.exports = {
         const values = [crewName, category, level, time, content, image];
         return pool.queryParam_Parse(query, values);
     },
-
     recruit: ({crewIdx, userIdx}) => {
         const table = 'recruit';
         const fields = 'crewIdx, userIdx';
