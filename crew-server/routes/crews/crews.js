@@ -28,6 +28,11 @@ router.get('/category/:category', (req, res) => {
     })
 });
 
+// 카테고리 리스트 출력
+router.get('/categoryList', (req, res) => {
+    res.render('crews/crewCategoryList')
+})
+
 // 크루 상세 정보 페이지 
 router.get('/:crewIdx', (req, res) => {
     const crewIdx = req.params.crewIdx;
