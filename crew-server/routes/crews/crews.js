@@ -33,6 +33,34 @@ router.get('/categoryList', (req, res) => {
     res.render('crews/crewCategoryList')
 })
 
+// 크루에 가입하기
+router.get('/:crewIdx/recruit', authUtil.isLoggedin , (req, res) => {
+    console.log('?')
+    const crewIdx = req.params.crewIdx;
+    const userIdx = req.decoded.userIdx;
+    console.log(userIdx)
+
+    Crew.recruit({crewIdx, userIdx})
+    .then(result => {
+        console.log(result);
+        if(result.code && result.json) return result;
+        res.send('Success', {crewIdx:crewIdx, userIdx:userIdx})
+        // return {
+        //     code: code.OK,
+        //     json: util.successTrue('success')
+        // };
+    }).catch(err => {
+        console.log(err);
+        return {
+            code: code.INTERNAL_SERVER_ERROR,
+            json: util.successFalse(msg.INTERNAL_SERVER_ERROR)
+        };
+    }).then(({code, json})=>{
+        res.status(code).send(json)
+    });
+});
+
+
 // 크루 상세 정보 페이지 
 router.get('/:crewIdx', (req, res) => {
     const crewIdx = req.params.crewIdx;
@@ -43,38 +71,14 @@ router.get('/:crewIdx', (req, res) => {
     }
     Crew.read({crewIdx})
     .then((Crew) => {
-        const {crewName, category, level, time, content, image} = Crew[0];
-        //res.status(code.OK).send(util.successTrue(msg.CREW_READ_SUCCESS, data));
-        res.render('crews/crewDetail', {crewName, category, level, time, content, image}); 
+        const {crewIdx, crewName, category, level, time, content, image} = Crew[0];
+        //res.status(code.OK).send(util.successTrue(msg.CREW_READ_SUCCESS, {crewName, category, level, time, content, image}));
+        res.render('crews/crewDetail', {crewIdx, crewName, category, level, time, content, image}); 
     }).catch(err => {
-        console.log(err);
+        console.log(err)
         res.status(code.BAD_REQUEST)
         .send(util.successFalse(msg.OUT_OF_VALUE));
     })
-});
-
-// 크루에 가입하기
-router.get('/:crewIdx/recruit', authUtil.isLoggedin , (req, res) => {
-    const crewIdx = req.params.crewIdx;
-    const userIdx = req.decoded.userIdx;
-
-    Crew.recruit({crewIdx, userIdx})
-    .then(result => {
-        console.log(result);
-        if(result.code && result.json) return result;
-        return {
-            code: code.OK,
-            json: util.successTrue('success')
-        };
-    }).catch(err => {
-        console.log(err);
-        return {
-            code: code.INTERNAL_SERVER_ERROR,
-            json: util.successFalse(msg.INTERNAL_SERVER_ERROR)
-        };
-    }).then(({code, json})=>{
-        res.status(code).send(json)
-    });
 });
 
 router.get('/', (req, res) => {
