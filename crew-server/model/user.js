@@ -39,7 +39,7 @@ module.exports = {
                 // 로그인 성공
                 return {
                     code: code.OK,
-                    json: util.successTrue(msg.SIGN_IN_SUCCESS, data)
+                    json: util.successTrue(msg.SIGN_IN_SUCCESS, {userIdx: user.userIdx, userName: user.userName, token: data.token, refreshToken: data.refreshToken})
                 }
             })
             .catch(err => {

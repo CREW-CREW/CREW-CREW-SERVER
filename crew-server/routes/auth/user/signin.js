@@ -20,8 +20,11 @@ router.post('/', (req, res) => {
         return;
     }
     User.signin({id, password})
-    .then((User) => {
-        res.send('<script type="text/javascript">alert("Successfully verified"); window.location="/"; </script>');
+    .then(result => {
+        console.log(result)
+        // res.send('<script type="text/javascript">alert("Successfully verified"); window.location="/"; </script>');
+        // res.status('<script type="text/javascript">alert("Successfully verified"); window.location="/"; </script>')
+        res.render('home', {data: result});
     }).catch(err => {
         //console.log(err)
         res.status(code.INTERNAL_SERVER_ERROR)

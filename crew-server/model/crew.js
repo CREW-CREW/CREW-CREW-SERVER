@@ -3,7 +3,7 @@ const pool = require('../module/poolAsync');
 module.exports = {
     read: ({crewIdx}) => {
         const table = 'crew';
-        const query = `SELECT * FROM ${table} WHERE crewIdx = '${crewIdx}'`;
+        const query = `SELECT * FROM ${table} WHERE crewIdx = ${crewIdx}`;
         console.log(query);
         return pool.queryParam_None(query);
     },
