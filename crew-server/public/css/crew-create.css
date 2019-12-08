@@ -12,6 +12,7 @@ body * {
 .form-container {
     width: 50%;
     padding: 5%;
+    padding-bottom: -5%;
     margin: 0 auto;
     border-radius: 2px;
     background: linear-gradient(rgba(255, 255, 255, 1) 35%, rgba(245, 245, 245, 1) 55%);
@@ -19,7 +20,9 @@ body * {
 }
 
 h1 {
-    font-size: 2.6rem;
+    font-size: 3.6rem;
+    font-weight: bolder;
+    font-family: 'Raleway', sans-serif;
     text-align: center;
     margin: 0 0 2em;
     color: #7AC351;
