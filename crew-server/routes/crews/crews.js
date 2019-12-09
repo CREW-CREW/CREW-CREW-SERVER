@@ -44,11 +44,11 @@ router.get('/:crewIdx/recruit', authUtil.isLoggedin , (req, res) => {
     .then(result => {
         console.log(result);
         if(result.code && result.json) return result;
-        res.send('Success', {crewIdx:crewIdx, userIdx:userIdx})
-        // return {
-        //     code: code.OK,
-        //     json: util.successTrue('success')
-        // };
+        // res.send('Success', {crewIdx:crewIdx, userIdx:userIdx})
+        return {
+            code: code.OK,
+            json: util.successTrue('success')
+        };
     }).catch(err => {
         console.log(err);
         return {
