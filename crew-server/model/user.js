@@ -36,6 +36,7 @@ module.exports = {
                 }
 
                 const data = jwt.sign(user);
+
                 // 로그인 성공
                 return {
                     code: code.OK,
