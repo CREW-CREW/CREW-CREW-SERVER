@@ -214,7 +214,7 @@
                     <div class="col-lg-3">
                         <div class="sidebar">
                             <div class="sidebar_background"></div>
-                            <div class="sidebar_top"><a href="/crews/<%=crewIdx%>/recruit">Join Crew</a></div>
+                            <div class="sidebar_top" id="trigger"><a href="/crews/<%=crewIdx%>/recruit">Join Crew</a></div>
                             <div class="sidebar_content">
 
                                 <!-- Features -->
@@ -253,7 +253,19 @@
         </div>
         
     </div>
+
+
         <script src="/javascripts/jquery-3.2.1.min.js"></script>
+        <script>
+                $.ajax({
+                    type:"POST",
+                    url:"/crews/1/recruit",
+                    headers:{
+                        // "Content-Type":"application/json",
+                        "X-HTTP-Method-Override":"POST",
+                        "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWR4IjoxMDIsImlhdCI6MTU3NTg2MTExMywiZXhwIjoxNTc1ODY0NzEzLCJpc3MiOiJzeWhzIn0.NpxPFefnQ0A_g5z2FDNNKJHUWfkDivrbfTnSseOS9-Y"}
+                });
+        </script>
         <script src="/styles/bootstrap4/popper.js"></script>
         <script src="/styles/bootstrap4/bootstrap.min.js"></script>
         <script src="/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
