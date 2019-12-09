@@ -304,9 +304,11 @@ html.fp-enabled,
 
 #section3 {
     height: 100%;
-    background-color: rgba(0,0,0,0.7);
+    background: url(/images/section3.png) center center / cover no-repeat;
+    /* background-color: rgba(0,0,0,0.7); */
+    /* background-image:
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: cover; */
 }
 
 #section3_content {
@@ -332,10 +334,10 @@ html.fp-enabled,
     position: relative;
 }
 
-.iphone_img {
+/* .iphone_img {
     float: right;
     position: relative;
     width: 20%;
     height: 40%;
-}
+} */
 
