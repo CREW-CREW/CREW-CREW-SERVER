@@ -1,0 +1,33 @@
+nav{
+    position:fixed;
+    height: 50px;
+    display:block;
+    width: 100%;
+    background: transparent;
+    z-index:9;
+    color: #f2f2f2;
+    padding: 20px 0 0 0;
+    font-size: 2rem;
+    text-shadow: 2px 2px 2px rgba(0,0,0,0.26);
+}
+
+nav .menu1 {
+    margin-top: 0.23em;
+    margin-left: 50px;
+    float: left;
+    font-weight: bold;
+}
+
+nav .menu1:hover {
+    color: white;
+}
+
+nav .menu2 {
+    margin-top: 0.43em;
+    margin-right: 50px;
+    float: right;
+}
+
+nav .menu2:hover {
+    color: #CCFF00;
+}

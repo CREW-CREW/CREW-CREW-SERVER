@@ -1,5 +1,6 @@
 /* General Blueprint Style */
 @import url(//fonts.googleapis.com/css?family=Lato:300,400,700);
+@import url('https://fonts.googleapis.com/css?family=Do+Hyeon|Nanum+Gothic|Noto+Serif+KR|Yeon+Sung&display=swap');
 
 *, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 body, html { font-size: 100%; padding: 0; margin: 0;}
@@ -40,7 +41,7 @@ a:hover {
 }
 
 .container > header h1 {
-	font-family: 'Raleway', sans-serif;
+	font-family: 'Do Hyeon', sans-serif;
     font-size: 4.125em;
     /* -webkit-text-stroke: 1.7px rgb(255, 255, 255); */
 	text-shadow: 2.3px 2.3px 2.3px rgba(39, 39, 39, 0.639); 
