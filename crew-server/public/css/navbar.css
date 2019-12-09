@@ -1,0 +1,54 @@
+/* Style for our header texts
+* --------------------------------------- */
+h1{
+    font-size: 5em;
+    font-family: arial,helvetica;
+    color: #fff;
+    margin:0;
+    padding:0;
+}
+.intro p{
+    color: #fff;
+}
+/* Centered texts in each section
+* --------------------------------------- */
+/* .section{
+    text-align:center;
+} */
+/* Fixed header and footer.
+* --------------------------------------- */
+#header, #footer{
+    position:fixed;
+    height: 50px;
+    display:block;
+    width: 100%;
+    background: transparent;
+    z-index:9;
+    text-align:right;
+    color: #f2f2f2;
+    padding: 20px 0 0 0;
+    font-size: 2rem;
+}
+#header{
+    top:0px;
+    padding-right: 40px;
+}
+
+#header a {
+    text-decoration: none !important;
+    font-family: 'Lato', sans-serif;
+    font-weight: lighter;
+    text-shadow: 2px 2px 2px rgba(74, 74, 74, 0.783); 
+}
+#footer{
+    bottom:0px;
+}
+/* Bottom menu
+* --------------------------------------- */
+#infoMenu {
+    bottom: 80px;
+}
+#infoMenu li a {
+    color: #fff;
+    z-index: 999;
+}
