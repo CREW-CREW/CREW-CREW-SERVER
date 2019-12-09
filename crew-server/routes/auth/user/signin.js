@@ -10,7 +10,6 @@ router.get('/', (req, res) => {
     res.render('user/signin')
 })
 
-
 router.post('/', (req, res) => {
     const {id, password} = req.body;
     // 파라미터 값 체크
@@ -21,12 +20,12 @@ router.post('/', (req, res) => {
     }
     User.signin({id, password})
     .then(result => {
-        console.log(result)
-        // res.send('<script type="text/javascript">alert("Successfully verified"); window.location="/"; </script>');
-        // res.status('<script type="text/javascript">alert("Successfully verified"); window.location="/"; </script>')
-        res.render('home', {data: result});
+        const userIdx = result.json.data.userIdx
+        const userName = result.json.data.userName
+        const token = result.json.data.token
+        res.cookie("token", token)
+        res.render('home', {userIdx:userIdx, userName:userName, token:token});
     }).catch(err => {
-        //console.log(err)
         res.status(code.INTERNAL_SERVER_ERROR)
         .send(util.successFalse(msg.INTERNAL_SERVER_ERROR));
     });
@@ -35,8 +34,6 @@ router.post('/', (req, res) => {
 // 유저 상세정보 페이지
 router.get('/:id', (req, res) => {
     const id = req.params.id;
-    //const userId = req.query.userId;
-    console.log(1)
     if(!{id}){
         res.status(code.BAD_REQUEST)
         .send(util.successFalse(msg.NULL_VALUE));
@@ -45,8 +42,6 @@ router.get('/:id', (req, res) => {
     
     User.mypage({id})
     .then((User) => {
-        //res.status(code).send(json);
-        console.log(User)
         const {id, nickname, interest} = User[0];
         console.log(id, ' ', nickname, ' ', interest)
         res.render('user/mypage', {id, nickname, interest})
