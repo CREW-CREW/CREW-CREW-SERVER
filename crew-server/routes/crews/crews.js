@@ -13,7 +13,6 @@ router.get('/category/:category', (req, res) => {
     const category = req.params.category;
     Crew.readAll({category})
     .then((Crew) => {
-        //console.log(Crew);
         const length = Object.keys(Crew).length;
         if(Crew.code && Crew.json) return Crew;
         const {crewIdx, crewName, category, level, time, content, image} = Crew[0];
@@ -34,29 +33,24 @@ router.get('/categoryList', (req, res) => {
 })
 
 // 크루에 가입하기
-router.get('/:crewIdx/recruit', authUtil.isLoggedin , (req, res) => {
-    console.log('?')
+router.get('/:crewIdx/recruit', authUtil.isLoggedin, (req, res) => {
     const crewIdx = req.params.crewIdx;
     const userIdx = req.decoded.userIdx;
     console.log(userIdx)
 
     Crew.recruit({crewIdx, userIdx})
     .then(result => {
-        console.log(result);
         if(result.code && result.json) return result;
-        res.send('Success', {crewIdx:crewIdx, userIdx:userIdx})
-        // return {
-        //     code: code.OK,
-        //     json: util.successTrue('success')
-        // };
+        return {
+            code: code.OK,
+            json: util.successTrue('success')
+        };
     }).catch(err => {
         console.log(err);
-        return {
-            code: code.INTERNAL_SERVER_ERROR,
-            json: util.successFalse(msg.INTERNAL_SERVER_ERROR)
-        };
-    }).then(({code, json})=>{
-        res.status(code).send(json)
+        throw err;
+    })
+    .then(()=>{
+        res.send('<script type="text/javascript">alert("크루를 가입하였습니다!"); window.location="/crews/categoryList"; </script>');
     });
 });
 
@@ -72,7 +66,6 @@ router.get('/:crewIdx', (req, res) => {
     Crew.read({crewIdx})
     .then((Crew) => {
         const {crewIdx, crewName, category, level, time, content, image} = Crew[0];
-        //res.status(code.OK).send(util.successTrue(msg.CREW_READ_SUCCESS, {crewName, category, level, time, content, image}));
         res.render('crews/crewDetail', {crewIdx, crewName, category, level, time, content, image}); 
     }).catch(err => {
         console.log(err)
