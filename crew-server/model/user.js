@@ -60,6 +60,13 @@ module.exports = {
         area:area,
         interest:interest
     }) => {
+        //TODO : email 검사
+        const emailValidation = /^[\w.+\-]+@sookmyung\.ac.kr$/;
+        if (!emailValidation.test(email)){
+            return Promise.resolve().then( _ => {return {code: 200, json: '<script type="text/javascript">alert("숙명 메일로 가입하세요!"); window.location="/auth/user/signup"; </script>'}});
+        } 
+        
+        //
         const table = 'user';
         const fields = 'id, password, salt, key_for_verify, userName, nickname, email, area, interest, email_verified';
         const questions = `?, ?, ?, ?, ?, ?, ?, ?, ?, ?`;
@@ -99,13 +106,6 @@ module.exports = {
         const query = `SELECT email FROM ${table} WHERE userIdx = '${insertId}'`;
         return pool.queryParam_None(query)
         .then(result => {
-            // if(!data){
-            //     return {
-            //         code: statusCode.BAD_REQUEST,
-            //         json: authUtil.successFalse(responseMessage.NO_USER)
-            //     };
-            // }
-            //console.log(result[0].email)
             const email = result[0].email
             return {
                 code: code.OK,

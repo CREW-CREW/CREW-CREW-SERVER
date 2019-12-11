@@ -46,6 +46,7 @@ router.post('/', (req, res) => {
         //인증번호 회원가입 시 추가하기
         return User.signup({id, password: hashed, salt, key_for_verify, userName, nickname, email, area, interest});
     }).then(result=> {
+        if(result.code && result.json) return result;
         console.log('여기는 signup',' ',result)
         const insertId = result.insertId
         console.log(insertId)
@@ -90,7 +91,9 @@ router.post('/', (req, res) => {
             code: code.INTERNAL_SERVER_ERROR,
             json: util.successFalse(msg.INTERNAL_SERVER_ERROR)
         };
-    }).then(({code, json})=>{
+    }).then((obj)=>{
+        if(!obj) return;
+        const {code, json} = obj;
         res.status(code).send(json)
     });
 
