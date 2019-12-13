@@ -14,7 +14,8 @@ const authUtil = {
         var token = req.cookies.token;
         if (!token) {
             //토큰이 헤더에 없으면
-            return res.json(util.successFalse(resMessage.EMPTY_TOKEN, statusCode.BAD_REQUEST));
+            res.send('<script type="text/javascript">alert("인증되지 않은 사용자입니다."); window.location="/auth/user/signin"; </script>');
+            //return res.json(util.successFalse(resMessage.EMPTY_TOKEN, statusCode.BAD_REQUEST));
         } else {
             //만든 jwt 모듈 사용하여 토큰 확인
             const user = jwt.verify(token);
