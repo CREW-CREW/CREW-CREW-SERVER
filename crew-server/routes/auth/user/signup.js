@@ -41,8 +41,6 @@ router.post('/', (req, res) => {
     .then((result) => {
         if(result.code && result.json) return result;
         const {hashed, salt} = result;
-     //   console.log(email)
-
         //인증번호 회원가입 시 추가하기
         return User.signup({id, password: hashed, salt, key_for_verify, userName, nickname, email, area, interest});
     }).then(result=> {
@@ -50,11 +48,10 @@ router.post('/', (req, res) => {
         console.log('여기는 signup',' ',result)
         const insertId = result.insertId
         console.log(insertId)
-        User.getEmail({insertId}).then(result => {
-                    
+        User.getEmail({insertId}).then(result => {                   
                     //url
                     var url = 'http://' + req.get('host')+'/auth/user/signup/confirmEmail'+'?key='+key_for_verify;               
-                    //const email = 'siyeon1313@gmail.com';
+                    console.log(req.host)
                     console.log('이거는 getEmail',' ', result);
                     //옵션
                     var mailOpt = {
@@ -80,10 +77,6 @@ router.post('/', (req, res) => {
                 json: util.successFalse(msg.INTERNAL_SERVER_ERROR)
             };
         })
-        // return {
-        //     code: code.OK,
-        //     json: util.successTrue('success', userIdx)
-        // };
     })
     .catch(err => {
         console.log(err);
@@ -102,8 +95,6 @@ router.post('/', (req, res) => {
 router.get('/confirmEmail', (req,res) => {
     const key = req.query.key
     console.log(key)
-    // user.updateOne({key_for_verify:req.query.key},{$set:{email_verified:true}}, function(err,user){
-    // User.update({key}, (err, user) => {
     User.update({key})
     .then(result => {
         console.log(result)
