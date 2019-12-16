@@ -32,15 +32,17 @@ router.post('/', (req, res) => {
 });
 
 // 유저 상세정보 페이지
-router.get('/:id', (req, res) => {
-    const id = req.params.id;
-    if(!{id}){
+router.get('/mypage', authUtil.isLoggedin, (req, res) => {
+    //const id = req.params.id;
+    const userIdx = req.decoded.userIdx;
+    console.log(userIdx)
+    if(!{userIdx}){
         res.status(code.BAD_REQUEST)
         .send(util.successFalse(msg.NULL_VALUE));
         return;
     }
     
-    User.mypage({id})
+    User.mypage({userIdx})
     .then((User) => {
         const {id, nickname, interest} = User[0];
         console.log(id, ' ', nickname, ' ', interest)
