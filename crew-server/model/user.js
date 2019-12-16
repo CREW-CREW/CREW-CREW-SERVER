@@ -86,9 +86,9 @@ module.exports = {
             });
     },
 
-    mypage:({id}) =>{
+    mypage:({userIdx}) =>{
         const table = 'user';
-        const query = `SELECT id, nickname, interest FROM ${table} WHERE id = '${id}'`;
+        const query = `SELECT id, nickname, interest FROM ${table} WHERE userIdx = '${userIdx}'`;
         return pool.queryParam_None(query);
     },
 
