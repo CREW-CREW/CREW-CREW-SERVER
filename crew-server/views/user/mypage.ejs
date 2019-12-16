@@ -13,29 +13,21 @@
         a:hover, a:active { text-decoration: none; }
     </style> 
     <div style="position: absolute; z-index:2; margin-left:2%; padding-top: 2%;" onclick="location.href='/';">
-<!--
-<a href="#">
-    <img src="/static/images/title.png" style="width:150px; height:auto;" />
--->
     </div> 
 </head>
-
 
 <body>
     <br>
     <aside class="profile-card">
-    <header>
-        <!-- here’s the avatar -->      
+    <header> 
         <a target="_blank">
         <img class="hoverZoomLink"  src="https://post-phinf.pstatic.net/MjAxODA4MTJfMzgg/MDAxNTM0MDYxNjMxNzI2.qYWnHXtSXQnkZbeMjmatpcVo0Vjjy87MHdiEs5G6znIg.K7Dctexbidm5_XDc4A-M2LK-sA3CfDc33eyiPG5Zzgcg.PNG/1.png?type=w1200">
         </a>
-        <!-- the username -->
         <h1>
                 MY PAGE
             </h1>
     </header>
 
-    <!-- bit of a bio; who are you? -->
     <div class="profile-bio">
         <p>
         ID : <%=id%><br> 
@@ -45,11 +37,6 @@
             <br>                 
         <p style="text-align:center;" id="textcenter">
             <a href="/" class="linkcolor">Home</a>
-            <!-- <a href="../../contact/listmessage" class="linkcolor">받은 쪽지함&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-            <a href="{% url 'myposts' %}" class="linkcolor">내가 쓴 글<br>
-            <a href="{% url 'changePassword' %}" class="linkcolor">비밀번호 변경&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-            <a href="javascript:{document.getElementById('logout').submit()}" class="linkcolor">로그아웃</a>
-            <form id='logout' method="POST" action="{% url 'logout' %}"> <input type="hidden" /></form><br> -->
         </p>
         </p>
     </div>
