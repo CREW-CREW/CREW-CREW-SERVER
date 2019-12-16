@@ -14,16 +14,12 @@ router.get('/category/:category', (req, res) => {
     Crew.readAll({category})
     .then((Crew) => {
         const length = Object.keys(Crew).length;
-        if(Crew.code && Crew.json) return Crew;
         const {crewIdx, crewName, category, level, time, content, image} = Crew[0];
         const list = Crew
         res.render('crews/crewList', {crewIdx, list, crewName, category, level, time, content, image, length}); 
     }).catch(err => {
         console.log(err);
-        return {
-            code: code.INTERNAL_SERVER_ERROR,
-            json: util.successFalse(msg.INTERNAL_SERVER_ERROR)
-        };
+        res.render('home')
     })
 });
 
@@ -37,21 +33,14 @@ router.get('/:crewIdx/recruit', authUtil.isLoggedin, (req, res) => {
     const crewIdx = req.params.crewIdx;
     const userIdx = req.decoded.userIdx;
     console.log(userIdx)
-
     Crew.recruit({crewIdx, userIdx})
     .then(result => {
-        if(result.code && result.json) return result;
-        return {
-            code: code.OK,
-            json: util.successTrue('success')
-        };
-    }).catch(err => {
-        console.log(err);
-        throw err;
-    })
-    .then(()=>{
         res.send('<script type="text/javascript">alert("크루를 가입하였습니다!"); window.location="/crews/categoryList"; </script>');
-    });
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(err.status || 500).send(`<script type="text/javascript">alert('${err.message}'); window.location="/"; </script>`);
+    })
 });
 
 
@@ -83,32 +72,15 @@ router.post('/', upload.single('image'), (req, res) =>  {
     console.log(req.file)
     req.body.image = req.file.location
     parameterChecker(req.body, ['crewName', 'category', 'level', 'time', 'content', 'image'])
-    .catch(err => {
-        console.log(err);
-        return {
-            code: code.BAD_REQUEST,
-            json: util.successFalse(err.message)
-        };
-    }).then(result => {
-        if(result.code && result.json) return result;
+    .then(result => {
         const json = result;
         return Crew.create(json)
     }).then(result => {
-        if(result.code && result.json) return result;
         const insertId = result.insertId;
-        return {
-            code: code.OK,
-            json: util.successTrue('',insertId)
-        };
+        res.send('<script type="text/javascript">alert("크루를 생성하였습니다!"); window.location="/crews/categoryList"; </script>');
     }).catch(err => {
         console.log(err);
-        return {
-            code: code.INTERNAL_SERVER_ERROR,
-            json: util.successFalse(msg.INTERNAL_SERVER_ERROR)
-        };
-    }).then(()=>{
-        //res.status(code).send(json);
-        res.send('<script type="text/javascript">alert("크루를 생성하였습니다!"); window.location="/"; </script>');
+        res.send(`<script type="text/javascript">alert("${err.message}"); window.location="/"; </script>`);
     });
 });
 

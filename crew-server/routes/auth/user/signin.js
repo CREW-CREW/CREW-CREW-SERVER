@@ -5,6 +5,8 @@ const util = require('../../../module/util')
 const code = require('../../../module/statusCode');
 const msg = require('../../../module/responseMessage');
 const User = require('../../../model/user');
+const encrypt = require('../../../module/encryption');
+const jwt = require('../../../module/jwt')
 
 router.get('/', (req, res) => {
     res.render('user/signin')
@@ -19,15 +21,29 @@ router.post('/', (req, res) => {
         return;
     }
     User.signin({id, password})
-    .then(result => {
-        const userIdx = result.json.data.userIdx
-        const userName = result.json.data.userName
-        const token = result.json.data.token
+    .then(async (userResult) => {
+        if (userResult.length == 0) {
+            console.log('no user')
+            throw new Error();
+        }
+        const user = userResult[0];
+        // 비밀번호 체크
+        const {
+            hashed
+        } = await encrypt.encryptWithSalt(password, user.salt);
+        if (user.password != hashed) {
+            console.log('password error')
+            throw new Error();
+        }
+        const data = jwt.sign(user);
+        const userIdx = user.userIdx
+        const userName = user.userName
+        const token = data.token
         res.cookie("token", token)
         res.render('home', {userIdx:userIdx, userName:userName, token:token});
     }).catch(err => {
-        res.status(code.INTERNAL_SERVER_ERROR)
-        .send(util.successFalse(msg.INTERNAL_SERVER_ERROR));
+        console.log(err)
+        res.send('<script type="text/javascript">alert("ID/PW를 확인해주세요."); window.location="/auth/user/signin"; </script>');
     });
 });
 

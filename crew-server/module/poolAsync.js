@@ -1,63 +1,66 @@
 const poolPromise = require('../config/dbConfig');
+const { DatabaseError, NoReferencedRowError, DuplicatedEntryError } = require('../errors');
+
 module.exports = {
     queryParam_None: async (query) => {
-        return new Promise(async (resolve, reject) => {
+        let result = null;
+        try {
+            const pool = await poolPromise;
+            const connection = await pool.getConnection();
             try {
-                const pool = await poolPromise;
-                const connection = await pool.getConnection();
-                try {
-                    const result = await connection.query(query);
-                    pool.releaseConnection(connection);
-                    resolve(result);
-                } catch (err) {
-                    pool.releaseConnection(connection);
-                    reject(err);
+                result = await connection.query(query);
+            } catch (queryError) {
+                connection.rollback(() => {});
+                if(queryError.errno == 1452) {
+                    result = new NoReferencedRowError();
                 }
-            } catch (err) {
-                reject(err);
+                else if(queryError.errno == 1062) {
+                    result = new DuplicatedEntryError();
+                }
+                console.log(queryError);
             }
-        });
+            pool.releaseConnection(connection);
+        } catch (connectionError) {
+            console.log(connectionError);
+        }
+        if(result instanceof Error) {
+            throw result;
+        }
+        if(!result) {
+            throw new DatabaseError();
+        }
+        return result;
     },
     queryParam_Arr: async (...args) => {
         this.queryParam_Parse(args[0], args[1]);
     },
     queryParam_Parse: async (query, value) => {
-        return new Promise(async (resolve, reject) => {
+        let result = null;
+        try {
+            const pool = await poolPromise;
+            const connection = await pool.getConnection();
             try {
-                const pool = await poolPromise;
-                const connection = await pool.getConnection();
-                try {
-                    const result = await connection.query(query, value);
-                    pool.releaseConnection(connection);
-                    resolve(result);
-                } catch (err) {
-                    pool.releaseConnection(connection);
-                    reject(err);
+                result = await connection.query(query, value) || null;
+            } catch (queryError) {
+                connection.rollback(() => {});
+                if(queryError.errno == 1452) {
+                    result = new NoReferencedRowError();
                 }
-            } catch (err) {
-                reject(err);
-            }
-        });
-    },
-    Transaction: async (...args) => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const pool = await poolPromise;
-                const connection = await pool.getConnection();
-                try {
-                    await connection.beginTransaction();
-                    args.forEach(async (it) => await it(connection));
-                    await connection.commit();
-                    pool.releaseConnection(connection);
-                    resolve(result);
-                } catch (err) {
-                    await connection.rollback()
-                    pool.releaseConnection(connection);
-                    reject(err);
+                else if(queryError.errno == 1062) {
+                    result = new DuplicatedEntryError();
                 }
-            } catch (err) {
-                reject(err);
+                console.log(queryError);
             }
-        });
+            pool.releaseConnection(connection);
+        } catch (connectionError) {
+            console.log(connectionError);
+        }
+        if(result instanceof Error) {
+            throw result;
+        }
+        if(!result) {
+            throw new DatabaseError();
+        }
+        return result;
     }
 }
