@@ -9,9 +9,6 @@ module.exports = {
     },
     readAll: ({category}) => {
         const table = 'crew';
-        // let whereStr = Object.entries(whereJson).map(it => `${it[0]} = '${it[1]}'`).join(' AND ');
-        // if(whereStr.length > 0) whereStr = 'WHERE ' + whereStr;
-
         const query = `SELECT * FROM ${table} WHERE category = "${category}"`;
         console.log(query)
         return pool.queryParam_None(query);
