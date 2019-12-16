@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const pbkdf2 = require('pbkdf2');
 
 module.exports = {
-    encrypt: async (password) => {
+    encrypt: (password) => {
         return new Promise(async (resolve, reject) => {
             try {
                 const salt = (await crypto.randomBytes(32)).toString('hex');
@@ -20,7 +20,7 @@ module.exports = {
             }
         })
     },
-    encryptWithSalt: async (password, salt) => {
+    encryptWithSalt: (password, salt) => {
         return new Promise(async (resolve, reject) => {
             try {
                 pbkdf2.pbkdf2(password, salt, 1, 32, 'sha512', (err, derivedKey) => {
